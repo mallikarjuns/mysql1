@@ -1,4 +1,3 @@
-FROM openjdk:8
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 RUN apt-get purge mysql*
@@ -20,8 +19,8 @@ ADD my_init.d/99_mysql_setup.sh /etc/my_init.d/99_mysql_setup.sh
 RUN chmod +x /etc/my_init.d/99_mysql_setup.sh
 ADD my_init.d/Jiradb.sql /etc/Jiradb.sql
 RUN chmod +x /etc/Jiradb.sql
-#RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
-#sleep 5 && \
+RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
+sleep 5 && \
 /opt/atlassian/jira/bin/start-jira.sh && \
 service mysql start && \
 mysql -uroot -proot -e "CREATE DATABASE Jiradb" && \

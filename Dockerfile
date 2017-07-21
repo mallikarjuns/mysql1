@@ -13,12 +13,17 @@ COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 RUN chmod +x /docker-entrypoint.sh
 
-
 ADD my_init.d/Jiradb.sql /etc/Jiradb.sql
 RUN chmod +x /etc/Jiradb.sql
+RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
+sleep 5 && \
+/opt/atlassian/jira/bin/start-jira.sh && \
+service mysql start && \
+mysql -uroot -proot -e "CREATE DATABASE Jiradb" && \
+mysql -uroot -proot Jiradb < /etc/Jiradb.sql
 
-ADD script/custom.sh /etc/custom.sh
-RUN chmod +x /etc/custom.sh
+#ADD script/custom.sh /etc/custom.sh
+#RUN chmod +x /etc/custom.sh
 
 EXPOSE 3306/tcp
 VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]

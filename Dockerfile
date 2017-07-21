@@ -22,6 +22,6 @@ RUN chmod +x /docker-entrypoint.sh
 #ADD script/custom.sh /etc/custom.sh
 #RUN chmod +x /etc/custom.sh
 
-EXPOSE 3306/tcp
+EXPOSE 3306
 VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]
-CMD ["/usr/bin/mysqld_safe"]
+#CMD ["/usr/bin/mysqld_safe"]

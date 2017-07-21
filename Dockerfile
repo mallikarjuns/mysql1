@@ -14,10 +14,10 @@ COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
 RUN chmod +x /docker-entrypoint.sh
 
-ADD my_init.d/Jiradb.sql /etc/Jiradb.sql
-RUN chmod +x /etc/Jiradb.sql
-RUN mysql -uroot -proot -e "CREATE DATABASE Jiradb"
-RUN mysql -uroot -proot Jiradb < /etc/Jiradb.sql
+#ADD my_init.d/Jiradb.sql /etc/Jiradb.sql
+#RUN chmod +x /etc/Jiradb.sql
+#RUN mysql -uroot -proot -e "CREATE DATABASE Jiradb"
+#RUN mysql -uroot -proot Jiradb < /etc/Jiradb.sql
 
 #ADD script/custom.sh /etc/custom.sh
 #RUN chmod +x /etc/custom.sh

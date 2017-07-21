@@ -1,4 +1,5 @@
 FROM sameersbn/ubuntu:14.04.20170123
+FROM openjdk:8
 
 ENV MYSQL_USER=mysql \
 MYSQL_DATA_DIR=/var/lib/mysql \

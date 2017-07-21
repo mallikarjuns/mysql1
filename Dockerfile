@@ -1,29 +1,16 @@
-FROM ubuntu:latest
-RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-
-RUN wget http://dev.mysql.com/get/mysql-apt-config_0.6.0-1_all.deb
-RUN dpkg -i mysql-apt-config_0.6.0-1_all.deb || true
-RUN apt-get update
-RUN apt-get install -y mysql-server
-#RUN rm -rf /var/lib/mysql/*
-ADD build/my.cnf /etc/mysql/my.cnf
-ADD build/dbconfig.xml /var/atlassian/application-data/jira
-RUN mkdir /etc/mysql/run
-ADD runit/mysql.sh /etc/mysql/run
-RUN chmod +x /etc/mysql/run
-ADD build/Setup /root/setup
-ADD my_init.d/99_mysql_setup.sh /etc/my_init.d/99_mysql_setup.sh
-RUN chmod +x /etc/my_init.d/99_mysql_setup.sh
-ADD my_init.d/Jiradb.sql /etc/Jiradb.sql
-RUN chmod +x /etc/Jiradb.sql
-
-RUN /bin/bash -c mysql -uroot -proot -e "CREATE DATABASE Jiradb" && \
-mysql -uroot -proot Jiradb < /etc/Jiradb.sql
-
-#CMD docker exec -it mysql -uroot -proot Jiradb < /etc/Jiradb.sql
-EXPOSE 3306
-#RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+FROM sameersbn/ubuntu:14.04.20170123
+MAINTAINER sameer@damagehead.com
+ENV MYSQL_USER=mysql \
+MYSQL_DATA_DIR=/var/lib/mysql \
+MYSQL_RUN_DIR=/run/mysqld \
+MYSQL_LOG_DIR=/var/log/mysql
+RUN apt-get update \
+&& DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server \
+&& rm -rf ${MYSQL_DATA_DIR} \
+&& rm -rf /var/lib/apt/lists/*
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+EXPOSE 3306/tcp
+VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]
+ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["/usr/bin/mysqld_safe"]
-#CMD ["/opt/atlassian/jira/bin/start-jira.sh", "run"]

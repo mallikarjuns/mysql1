@@ -25,3 +25,4 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 3306
 VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]
 #CMD ["/usr/bin/mysqld_safe"]
+CMD bash

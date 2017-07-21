@@ -11,7 +11,7 @@ RUN apt-get update \
 && rm -rf /var/lib/apt/lists/*
 
 COPY "docker-entrypoint.sh" "/"
-ENTRYPOINT ["/docker-entrypoint.sh"]
+#ENTRYPOINT ["/docker-entrypoint.sh"]
 RUN chmod +x /docker-entrypoint.sh
 
 #ADD my_init.d/Jiradb.sql /etc/Jiradb.sql

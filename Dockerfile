@@ -1,5 +1,5 @@
 FROM sameersbn/ubuntu:14.04.20170123
-MAINTAINER sameer@damagehead.com
+
 ENV MYSQL_USER=mysql \
 MYSQL_DATA_DIR=/var/lib/mysql \
 MYSQL_RUN_DIR=/run/mysqld \

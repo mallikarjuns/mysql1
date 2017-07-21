@@ -22,5 +22,5 @@ RUN chmod +x /etc/custom.sh
 
 EXPOSE 3306/tcp
 VOLUME ["${MYSQL_DATA_DIR}", "${MYSQL_RUN_DIR}"]
-ENTRYPOINT ["/sbin/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/bin/mysqld_safe"]

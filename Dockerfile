@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM ubuntu:latest
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 

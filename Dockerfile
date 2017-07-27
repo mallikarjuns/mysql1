@@ -8,7 +8,7 @@ RUN rm -rf /etc/mysql/ /var/lib/mysql
 #RUN wget http://dev.mysql.com/get/mysql-apt-config_0.8.1-1_all.deb
 #RUN dpkg -i mysql-apt-config_0.8.1-1_all.deb || true
 RUN apt-get update
-RUN apt-get install mysql-server
+RUN apt-get install -y mysql-server
 #RUN rm -rf /var/lib/mysql/*
 ADD build/my.cnf /etc/mysql/my.cnf
 ADD build/dbconfig.xml /var/atlassian/application-data/jira
